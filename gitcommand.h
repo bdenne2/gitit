@@ -15,11 +15,17 @@ class GitCommand : public QObject
 public:
     explicit GitCommand(QObject *parent = 0);
     ~GitCommand();
+    ///runs git with given args catenated with default args
     void run(QStringList arguments);
+    ///gets gits current status on changed files
     void status();
+    ///removes ignored files from the git status list
     void lsIgnored();
+    ///stages the file
     void add(QString filename);
+    ///gets the log from git and emits output
     void log();
+    ///sets the repos author to whats in the settings
     void author();
 
 private:

@@ -1,9 +1,9 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
-//@mainpage Gitit
-//@version The14school
-//@author Stephen Sennebogan, Bryanna Denney, Michael Salata
+///@mainpage Gitit
+///@version alpha
+///@author Stephen Sennebogan, Bryanna Denney, Michael Salata
 
 int main(int argc, char *argv[])
 {

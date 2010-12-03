@@ -1,6 +1,7 @@
 #include "configure.h"
 #include "ui_configure.h"
 
+///CONSTRUCTOR:displays the values in settings to config menu
 Configure::Configure(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Configure)

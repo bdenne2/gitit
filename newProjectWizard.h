@@ -1,12 +1,10 @@
 #ifndef NEWPROJECTWIZARD_H
 #define NEWPROJECTWIZARD_H
 
-<<<<<<< HEAD
 class newProjectWizard
 {
 public:
     newProjectWizard();
-=======
 #include<QWizard>
 #include<QWizardPage>
 #include<QLabel>
@@ -42,7 +40,6 @@ private:
 private slots:
     void getPath();
 
->>>>>>> hef/for-Tatlreach
 };
 
 #endif // NEWPROJECTWIZARD_H

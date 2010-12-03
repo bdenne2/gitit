@@ -3,6 +3,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QComboBox>
+#include "gitcommand.h"
 
 /*
  TODO list
@@ -13,7 +14,8 @@
  */
 
 ExistingProjectWizard::ExistingProjectWizard() :
-    path()
+        gitCommand(new GitCommand),
+        path()
 {
     path << "";
 
@@ -39,6 +41,7 @@ ExistingProjectWizard::ExistingProjectWizard() :
     this->addPage( conclusion);
 
     hiddenComment->setWordWrap(true);
+    connect(this,SIGNAL(accepted()),this,SLOT(createRepo()));
 
 }
 
@@ -49,6 +52,7 @@ ExistingProjectWizard::~ExistingProjectWizard()
     delete remotePath;
     delete localDirectory;
     delete conclusion;
+<<<<<<< HEAD
     delete remoteOption;
 }
 
@@ -62,6 +66,9 @@ void ExistingProjectWizard::clear()
     userLocalDirectory->clear();
     localButton->clearFocus();
     remoteButton->clearFocus();
+=======
+    delete gitCommand;
+>>>>>>> hef/master
 }
 
 int ExistingProjectWizard::nextId() const
@@ -137,6 +144,14 @@ void ExistingProjectWizard::createGetLocalPath()
     vLayout->addLayout(hLayout);
 
     localPath->setLayout(vLayout);
+
+}
+void ExistingProjectWizard::createRepo()
+{
+    QStringList args;
+    args << "init" << pathDisplay->text();
+    gitCommand->run(args);
+
 }
 
 void ExistingProjectWizard::createGetRemotePath()
@@ -223,6 +238,10 @@ void ExistingProjectWizard::getPath()
         path = dialog.selectedFiles();
 
     pathDisplay->setText(path[0]);
+}
+QString ExistingProjectWizard::getGitPath()
+{
+    return path[0];
 }
 
 void ExistingProjectWizard::getPathToLocalDirectory()

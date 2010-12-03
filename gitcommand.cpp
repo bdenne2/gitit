@@ -78,17 +78,15 @@ void GitCommand::setAuthor()
 }
 void GitCommand::author()
 {
-    *defaultArgs = QStringList() << "--git-dir" << repo + "/.git" << "--work-tree" << repo;
-
     QSettings settings;
-    //QString proc = settings.value("gitPath").toString();
-    QString proc = "C:\\Program Files (x86)\\Mysysgit\\cmd\\git.cmd";
-    //QStringList args = *defaultArgs;
+    QString proc = settings.value("gitPath").toString();
+    //QString proc = "C:\\Program Files (x86)\\Mysysgit\\cmd\\git.cmd";
+    QStringList args = *defaultArgs;
 
-    //QString author = settings.value("authorName").toString(); //doesn't seem to work with Mike
-    QString author = "Mika";
-    QStringList args;
-    args << "--git-dir" << repo + "/.git" << "--work-tree" << repo << "config" << "user.name" << author;
+    QString author = settings.value("authorName").toString(); //doesn't seem to work with Mike
+    //QString author = "Mika";
+
+    args << "config" << "user.name" << author;
     //args << "--git-dir" << repo + "/.git" << "--work-tree" << repo << "config" << "user.name" << author;
 
     gitSetAuthorProcess->start(proc, args);
@@ -96,8 +94,8 @@ void GitCommand::author()
 }
 void GitCommand::authorOutput(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    QByteArray result = gitSetAuthorProcess->readAll();
-    QString resultString=result;
+    //QByteArray result = gitSetAuthorProcess->readAll();
+    //QString resultString=result;
 
 }
 void GitCommand::log()

@@ -139,6 +139,7 @@ void MainWindow::on_gitAddButton_clicked()
 void MainWindow::reload()
 {
     gitCommand->status();
+    gitCommand->author();
     gitCommand->lsIgnored();
     gitCommand->log();
 }

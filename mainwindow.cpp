@@ -9,9 +9,7 @@
 #include "gitstagedstatusmodel.h"
 #include <QStringList>
 
-@mainpage Gitit
-@version The14school
-@author Stephen Sennebogan, Bryanna Denney, Michael Salata
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

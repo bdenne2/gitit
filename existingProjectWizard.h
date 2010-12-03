@@ -19,9 +19,14 @@ public:
    ExistingProjectWizard();
    ~ExistingProjectWizard();
 <<<<<<< HEAD
+<<<<<<< HEAD
    void clear();
 =======
    QString getGitPath();
+>>>>>>> hef/master
+=======
+   QString getGitPath();
+   void clear();
 >>>>>>> hef/master
 private:
     GitCommand* gitCommand;

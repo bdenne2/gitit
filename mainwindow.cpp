@@ -9,6 +9,8 @@
 #include "gitstagedstatusmodel.h"
 #include <QStringList>
 
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -39,6 +41,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //using a builtin model here:
     connect( gitCommand, SIGNAL(lsIgnored(QStringList)), this, SLOT(updateIgnoredModel(QStringList)));
     connect( gitCommand, SIGNAL(log(QString))          , this, SLOT(updateLog(QString) ));
+    QSettings settings;
+    this->gitCommand->setRepo( settings.value("defaultRepo").toString() );
+    reload();
+
 
 }
 
@@ -148,6 +154,7 @@ void MainWindow::on_gitAddButton_clicked()
 void MainWindow::reload()
 {
     gitCommand->status();
+    gitCommand->author();
     gitCommand->lsIgnored();
     gitCommand->log();
     ui->statusBar->showMessage(repo,30000);

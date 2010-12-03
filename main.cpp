@@ -1,6 +1,10 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
+//@mainpage Gitit
+//@version The14school
+//@author Stephen Sennebogan, Bryanna Denney, Michael Salata
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

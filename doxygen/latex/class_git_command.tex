@@ -1,0 +1,90 @@
+\hypertarget{class_git_command}{
+\section{GitCommand Class Reference}
+\label{class_git_command}\index{GitCommand@{GitCommand}}
+}
+
+
+{\ttfamily \#include $<$gitcommand.h$>$}
+
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_git_command_acf1a808942215645ff732632d62e44c1}{
+void {\bfseries setRepo} (QString repo)}
+\label{class_git_command_acf1a808942215645ff732632d62e44c1}
+
+\item 
+\hypertarget{class_git_command_a236ecf1595ab433f348cee33ec939a5a}{
+void {\bfseries setAuthor} ()}
+\label{class_git_command_a236ecf1595ab433f348cee33ec939a5a}
+
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_git_command_a88243db55abf875014f39a15e611f392}{
+void {\bfseries status} (QStringList files)}
+\label{class_git_command_a88243db55abf875014f39a15e611f392}
+
+\item 
+\hypertarget{class_git_command_a59bc4148030ce8acc768bded0f3207e6}{
+void {\bfseries lsIgnored} (QStringList files)}
+\label{class_git_command_a59bc4148030ce8acc768bded0f3207e6}
+
+\item 
+\hypertarget{class_git_command_a197fd3565dbf4e5646b3b3ff19727575}{
+void {\bfseries log} (QString log)}
+\label{class_git_command_a197fd3565dbf4e5646b3b3ff19727575}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_git_command_ada4bd255e76af1ab8f15ecfef65ff435}{
+{\bfseries GitCommand} (QObject $\ast$parent=0)}
+\label{class_git_command_ada4bd255e76af1ab8f15ecfef65ff435}
+
+\item 
+\hypertarget{class_git_command_af2162840462484daa73bee02f66e8d54}{
+void {\bfseries run} (QStringList arguments)}
+\label{class_git_command_af2162840462484daa73bee02f66e8d54}
+
+\item 
+\hypertarget{class_git_command_a038aa269b251635935f60b0e683d3209}{
+void {\bfseries status} ()}
+\label{class_git_command_a038aa269b251635935f60b0e683d3209}
+
+\item 
+\hypertarget{class_git_command_a11e4a48f1f98e31f4047d454106cb354}{
+void {\bfseries lsIgnored} ()}
+\label{class_git_command_a11e4a48f1f98e31f4047d454106cb354}
+
+\item 
+\hypertarget{class_git_command_a0b915b41bd54238d44ca314030ebe023}{
+void {\bfseries add} (QString filename)}
+\label{class_git_command_a0b915b41bd54238d44ca314030ebe023}
+
+\item 
+\hypertarget{class_git_command_a48837cbba385fe546f0f586a79705766}{
+void {\bfseries log} ()}
+\label{class_git_command_a48837cbba385fe546f0f586a79705766}
+
+\item 
+\hypertarget{class_git_command_af27ca9c48f85b3ce43d6ce18cfb72871}{
+void {\bfseries author} ()}
+\label{class_git_command_af27ca9c48f85b3ce43d6ce18cfb72871}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is responsible for all interactions with the git command, and therefor the git databases. 
+
+Definition at line 12 of file gitcommand.h.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+gitcommand.h\item 
+gitcommand.cpp\end{DoxyCompactItemize}

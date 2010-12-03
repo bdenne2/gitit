@@ -16,7 +16,9 @@ public:
     explicit Configure(QWidget *parent = 0);
     ~Configure();
 public slots:
+    ///updates the saved configure vars the to the ones user entered
     void accept();
+    ///keeps saved configure vars regardless of user entry
     void reject();
 private:
     Ui::Configure *ui;

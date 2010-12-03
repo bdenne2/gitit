@@ -65,7 +65,7 @@
         <string>Author name:</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="authorNameLineEdit"/>
      </widget>
     </item>
     <item>
@@ -78,7 +78,7 @@
         <string>Author email:</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_3"/>
+      <widget class="QLineEdit" name="authorEmailLineEdit"/>
      </widget>
     </item>
    </layout>

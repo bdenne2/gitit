@@ -52,11 +52,7 @@ ExistingProjectWizard::~ExistingProjectWizard()
     delete remotePath;
     delete localDirectory;
     delete conclusion;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     delete gitCommand;
->>>>>>> hef/master
     delete remoteOption;
 }
 
@@ -70,12 +66,6 @@ void ExistingProjectWizard::clear()
     userLocalDirectory->clear();
     localButton->clearFocus();
     remoteButton->clearFocus();
-<<<<<<< HEAD
-=======
-    delete gitCommand;
->>>>>>> hef/master
-=======
->>>>>>> hef/master
 }
 
 int ExistingProjectWizard::nextId() const

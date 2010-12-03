@@ -12,7 +12,8 @@ GitCommand::GitCommand(QObject *parent) :
     gitSetAuthorProcess(new QProcess),
     gitLSIgnoredProcess(new QProcess),
     gitLogProcess(new QProcess),
-    gitAddProcess(new QProcess)
+    gitAddProcess(new QProcess),
+    gitBranchListProcess(new QProcess)
 {
     connect(gitStatusProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(statusOutput(int, QProcess::ExitStatus)));
     connect(gitSetAuthorProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(authorOutput(int, QProcess::ExitStatus)));
@@ -28,8 +29,9 @@ GitCommand::~GitCommand()
     delete gitLSIgnoredProcess;
     delete gitAddProcess;
     delete gitLogProcess;
+    delete gitBranchListProcess;
 }
-void GitCommand::run(QStringList arguments)
+QStringList GitCommand::run(QStringList arguments)
 {
     QSettings settings;
     QString proc = settings.value("gitPath").toString();
@@ -37,6 +39,10 @@ void GitCommand::run(QStringList arguments)
     args << arguments;
     gitRunProcess->start(proc, args);
     gitRunProcess->waitForFinished(3000);
+    QByteArray result = gitRunProcess->readAll();
+    QString resultString(result);
+    QStringList resultList = resultString.split('\n',QString::SkipEmptyParts);
+    return resultList;
 }
 void GitCommand::status()
 {
@@ -105,7 +111,10 @@ void GitCommand::log()
     QStringList args = *defaultArgs;
     args << "log";
     gitLogProcess->start(proc,args);
+
 }
+
+
 void GitCommand::logOutput(int exitCode, QProcess::ExitStatus exitStatus)
 {
     QByteArray result = gitLogProcess->readAll();
@@ -113,7 +122,33 @@ void GitCommand::logOutput(int exitCode, QProcess::ExitStatus exitStatus)
     emit log(result);
 
 }
+QStringList GitCommand::branchList()
+{
+    QSettings settings;
+    QString proc = settings.value("gitPath").toString();
+    QStringList args = *defaultArgs;
+    args << "branch" << "--color=never";
+    gitBranchListProcess->start(proc,args);
+    gitBranchListProcess->waitForFinished(5000);
+    QByteArray result = gitBranchListProcess->readAll();
+    QString resultString(result);
+    QStringList branchStringList = resultString.split('\n',QString::SkipEmptyParts);
+    return branchStringList;
 
+}
+QStringList GitCommand::remoteBranchList()
+{
+    QSettings settings;
+    QString proc = settings.value("gitPath").toString();
+    QStringList args = *defaultArgs;
+    args << "branch" << "-r" << "--color=never";
+    gitBranchListProcess->start(proc,args);
+    gitBranchListProcess->waitForFinished(5000);
+    QByteArray result = gitBranchListProcess->readAll();
+    QString resultString(result);
+    QStringList branchStringList = resultString.split('\n',QString::SkipEmptyParts);
+    return branchStringList;
+}
 void GitCommand::add(QString filename)
 {
     QSettings settings;

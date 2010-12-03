@@ -65,7 +65,11 @@
         <string>Author name:</string>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="authorNameLineEdit"/>
+=======
+      <widget class="QLineEdit" name="nameLineEdit"/>
+>>>>>>> hef/master
      </widget>
     </item>
     <item>
@@ -78,6 +82,7 @@
         <string>Author email:</string>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="authorEmailLineEdit"/>
      </widget>
     </item>
@@ -92,6 +97,9 @@
        </property>
       </widget>
       <widget class="QLineEdit" name="defaultRepoLineEdit"/>
+=======
+      <widget class="QLineEdit" name="emailLineEdit"/>
+>>>>>>> hef/master
      </widget>
     </item>
    </layout>

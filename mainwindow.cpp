@@ -8,19 +8,21 @@
 #include "gitcommand.h"
 #include "gitstagedstatusmodel.h"
 #include <QStringList>
+#include <QInputDialog>
 
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    gitCommand(new GitCommand),
     ui(new Ui::MainWindow),
-    configure(new Configure(this)),
+    configure(new Configure(this,gitCommand)),
     gitChangedStatusModel(new GitChangedStatusModel),
     gitStagedStatusModel(new GitStagedStatusModel),
     gitIgnoredFilesModel(new QStringListModel),
     existingProjectWizard( new ExistingProjectWizard),
-    newProjectWizard( new NewProjectWizard),
-    gitCommand(new GitCommand)
+    newProjectWizard( new NewProjectWizard)
+
 
 {
     ui->setupUi(this);
@@ -124,6 +126,8 @@ void MainWindow::activateNewProjectWizard()
     newProjectWizard->restart();
     newProjectWizard->clear();
     newProjectWizard->show();
+    gitCommand->setRepo(newProjectWizard->getGitPath());
+    reload();
 }
 
 void MainWindow::updateIgnoredModel(QStringList files)
@@ -168,6 +172,8 @@ void MainWindow::on_shipButton_clicked()
     description += "\n\n" + ui->commitDescription->toPlainText();
     args << "commit" << "-m" << description;
     gitCommand->run(args);
+    ui->commitDescription->setText("");
+    ui->commitName->setText("");
     reload();
 }
 
@@ -176,7 +182,160 @@ void MainWindow::on_reload_clicked()
     reload();
 }
 
+void MainWindow::on_createNewBranch_clicked()
+{
+    bool ok;
+    QStringList args;
+    QString newBranch = QInputDialog::getText(this,"Create Branch","Enter then name of the new Branch",QLineEdit::Normal,"",&ok);
+    if(ok)
+    {
+        args << "checkout" << "-b" << "newBranch";
+        gitCommand->run(args);
+    }
+}
+
+void MainWindow::on_renameBranch_clicked()
+{
+    bool ok;
+    QStringList args;
+    QString newName = QInputDialog::getText(this,"Rename Branch","Enter then new name of the current Branch",QLineEdit::Normal,"",&ok);
+    if(ok)
+    {
+        args << "branch" << "-M" << "newName";
+        gitCommand->run(args);
+    }
+}
+
+void MainWindow::on_mergeBranch_clicked()
+{
+    bool ok;
+    QStringList args;
+    QStringList branches = gitCommand->branchList();
+    QString branch = QInputDialog::getItem(this,
+                          "Merge Branch",
+                          "Select Branch to merge into current",
+                          branches,
+                          0,
+                          false,
+                          &ok);
+    QRegExp awesome("^..");
+    awesome.setPatternSyntax(QRegExp::RegExp2);
+    branch.replace(awesome,"");
+    if(ok)
+    {
+        args << "merge" << branch;
+        gitCommand->run(args);
+    }
+}
+
+void MainWindow::on_deleteBranch_clicked()
+{
+    bool ok;
+    QStringList args;
+    QStringList branches = gitCommand->branchList();
+    QString branch = QInputDialog::getItem(this,
+                          "Delete Branch",
+                          "Select Branch to Delete",
+                          branches,
+                          0,
+                          false,
+                          &ok);
+    QRegExp awesome("^..");
+    awesome.setPatternSyntax(QRegExp::RegExp2);
+    branch.replace(awesome,"");
+    if(ok)
+    {
+        args << "branch" << "-D" << branch;
+        gitCommand->run(args);
+    }
+}
+
+void MainWindow::on_changeCurrentBranch_clicked()
+{
+    bool ok;
+    QStringList args;
+    QStringList branches = gitCommand->branchList();
+    QString branch = QInputDialog::getItem(this,
+                          "Change Branch",
+                          "Select Branch to Change to",
+                          branches,
+                          0,
+                          false,
+                          &ok);
+    QRegExp awesome("^..");
+    awesome.setPatternSyntax(QRegExp::RegExp2);
+    branch.replace(awesome,"");
+    if(ok)
+    {
+        args << "checkout" << branch;
+        gitCommand->run(args);
+    }
+}
+
 void MainWindow::on_syncToButton_clicked()
 {
-    //TODO: fixme
+    bool ok;
+    QStringList args;
+    ///TODO: This needs to change to show a list of remote repos, not remote branches.
+    QStringList branches = gitCommand->remoteBranchList();
+    QString branch = QInputDialog::getItem(this,
+                          "Push to remote branch",
+                          "Select the remote branch to push too",
+                          branches,
+                          0,
+                          false,
+                          &ok);
+    QRegExp awesome("^..");
+    awesome.setPatternSyntax(QRegExp::RegExp2);
+    branch.replace(awesome,"");
+    if(ok)
+    {
+        args << "push" << branch;
+        gitCommand->run(args);
+    }
+}
+
+void MainWindow::on_syncFromButton_clicked()
+{
+    bool ok;
+    QStringList args;
+    ///TODO: This needs to change to show a list of remote repos, not remote branches.
+    QStringList branches = gitCommand->remoteBranchList();
+    QString branch = QInputDialog::getItem(this,
+                          "Push to remote branch",
+                          "Select the remote branch to push too",
+                          branches,
+                          0,
+                          false,
+                          &ok);
+    //TODO: filter tracjking branch output better
+    QRegExp awesome("^..");
+    awesome.setPatternSyntax(QRegExp::RegExp2);
+    branch.replace(awesome,"");
+    if(ok)
+    {
+        args << "merge" << branch;
+        gitCommand->run(args);
+    }
+}
+
+void MainWindow::on_gitIgnoreButton_clicked()
+{
+    QFile gitignore(repo + "/.gitignore");
+    gitignore.open(QIODevice::Append);
+    QTextStream out(&gitignore);
+
+
+    QItemSelectionModel* selectionModel = ui->changedFileslistView->selectionModel();
+    QItemSelection itemSelection = selectionModel->selection();
+    QModelIndexList indexList = itemSelection.indexes();
+    for(int i=0; i < indexList.count(); ++i)
+    {
+        QString filename = QString(indexList.at(i).data().toString());
+        out << filename <<"\n";
+
+        ui->statusBar->showMessage(filename,5000);
+    }
+    reload();
+
 }

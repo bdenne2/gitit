@@ -5,8 +5,10 @@ newProjectWizard::newProjectWizard()
 {
 =======
 #include "newProjectWizard.h"
-
-NewProjectWizard::NewProjectWizard()
+#include "gitcommand.h"
+NewProjectWizard::NewProjectWizard() :
+        gitCommand(new GitCommand),
+        path()
 {
    introPage = new QWizardPage;
    localPath = new QWizardPage;
@@ -22,6 +24,7 @@ NewProjectWizard::NewProjectWizard()
    this->addPage( introPage);
    this->addPage( localPath);
    this->addPage( conclusion);
+   connect(this,SIGNAL(accepted()),this,SLOT(createRepo()));
 }
 
 NewProjectWizard::~NewProjectWizard()
@@ -29,6 +32,7 @@ NewProjectWizard::~NewProjectWizard()
     delete introPage;
     delete localPath;
     delete conclusion;
+    delete gitCommand;
 }
 
 void NewProjectWizard::createIntroPage()
@@ -92,4 +96,23 @@ void NewProjectWizard::getPath()
 
     pathDisplay->setText(path[0]);
 >>>>>>> hef/for-Tatlreach
+}
+QString NewProjectWizard::getGitPath()
+{
+    if(path.count() > 0)
+        return path[0];
+    else
+        return QString();
+}
+
+void NewProjectWizard::createRepo()
+{
+    QStringList args;
+    if( pathDisplay->text().size() > 0 )
+    {
+        //simple init
+        args << "init" << pathDisplay->text();
+        path[0] = pathDisplay->text();
+        gitCommand->run(args);
+    }
 }

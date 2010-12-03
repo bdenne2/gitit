@@ -198,7 +198,7 @@ p, li { white-space: pre-wrap; }
           <property name="lineWidth">
            <number>1</number>
           </property>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>10</x>
@@ -323,7 +323,7 @@ p, li { white-space: pre-wrap; }
              <string>Sync to Remote Branch</string>
             </property>
            </widget>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="syncFromButton">
             <property name="text">
              <string>Sync From Remote Branch</string>
             </property>
@@ -353,7 +353,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>811</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

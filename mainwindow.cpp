@@ -36,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //using a builtin model here:
     connect( gitCommand, SIGNAL(lsIgnored(QStringList)), this, SLOT(updateIgnoredModel(QStringList)));
     connect( gitCommand, SIGNAL(log(QString))          , this, SLOT(updateLog(QString) ));
+    QSettings settings;
+    this->gitCommand->setRepo( settings.value("defaultRepo").toString() );
+    reload();
+
 
 }
 

@@ -20,12 +20,14 @@ public:
     void lsIgnored();
     void add(QString filename);
     void log();
+    void author();
 
 private:
     QStringList* defaultArgs;
     QString repo;
     QProcess* gitRunProcess;
     QProcess* gitStatusProcess;
+    QProcess* gitSetAuthorProcess;
     QProcess* gitLSIgnoredProcess;
     QProcess* gitLogProcess;
     QProcess* gitAddProcess;
@@ -37,11 +39,13 @@ signals:
 
 public slots:
     void setRepo(QString repo);
+    void setAuthor();
 
 private slots:
     void statusOutput(int exitCode, QProcess::ExitStatus exitStatus);
     void lsIgnoredOutput(int exitCode, QProcess::ExitStatus exitStatus);
     void logOutput(int exitCode, QProcess::ExitStatus exitStatus);
+    void authorOutput(int exitCode, QProcess::ExitStatus exitStatus);
 };
 
 #endif // GITCOMMAND_H

@@ -1,6 +1,10 @@
 #ifndef NEWPROJECTWIZARD_H
 #define NEWPROJECTWIZARD_H
 
+class newProjectWizard
+{
+public:
+    newProjectWizard();
 #include<QWizard>
 #include<QWizardPage>
 #include<QLabel>

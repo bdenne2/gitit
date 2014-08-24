@@ -15,19 +15,34 @@ class GitCommand : public QObject
 public:
     explicit GitCommand(QObject *parent = 0);
     ~GitCommand();
+<<<<<<< HEAD
+    ///runs git with given args catenated with default args
+    void run(QStringList arguments);
+    ///gets gits current status on changed files
+=======
     QStringList run(QStringList arguments);
+>>>>>>> hef/master
     void status();
+    ///removes ignored files from the git status list
     void lsIgnored();
+    ///stages the file
     void add(QString filename);
+    ///gets the log from git and emits output
     void log();
+<<<<<<< HEAD
+    ///sets the repos author to whats in the settings
+    void author();
+=======
     QStringList branchList();
     QStringList remoteBranchList();
+>>>>>>> hef/master
 
 private:
     QStringList* defaultArgs;
     QString repo;
     QProcess* gitRunProcess;
     QProcess* gitStatusProcess;
+    QProcess* gitSetAuthorProcess;
     QProcess* gitLSIgnoredProcess;
     QProcess* gitLogProcess;
     QProcess* gitAddProcess;
@@ -40,11 +55,13 @@ signals:
 
 public slots:
     void setRepo(QString repo);
+    void setAuthor();
 
 private slots:
     void statusOutput(int exitCode, QProcess::ExitStatus exitStatus);
     void lsIgnoredOutput(int exitCode, QProcess::ExitStatus exitStatus);
     void logOutput(int exitCode, QProcess::ExitStatus exitStatus);
+    void authorOutput(int exitCode, QProcess::ExitStatus exitStatus);
 };
 
 #endif // GITCOMMAND_H

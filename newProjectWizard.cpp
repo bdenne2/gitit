@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+#include "newprojectwizard.h"
+
+newProjectWizard::newProjectWizard()
+{
+=======
 #include "newProjectWizard.h"
 #include "gitcommand.h"
 NewProjectWizard::NewProjectWizard() :
@@ -89,6 +95,7 @@ void NewProjectWizard::getPath()
         path = dialog.selectedFiles();
 
     pathDisplay->setText(path[0]);
+>>>>>>> hef/for-Tatlreach
 }
 QString NewProjectWizard::getGitPath()
 {

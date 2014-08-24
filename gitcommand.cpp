@@ -9,12 +9,14 @@ GitCommand::GitCommand(QObject *parent) :
     repo(),
     gitRunProcess(new QProcess),
     gitStatusProcess(new QProcess),
+    gitSetAuthorProcess(new QProcess),
     gitLSIgnoredProcess(new QProcess),
     gitLogProcess(new QProcess),
     gitAddProcess(new QProcess),
     gitBranchListProcess(new QProcess)
 {
     connect(gitStatusProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(statusOutput(int, QProcess::ExitStatus)));
+    connect(gitSetAuthorProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(authorOutput(int, QProcess::ExitStatus)));
     connect(gitLSIgnoredProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(lsIgnoredOutput(int, QProcess::ExitStatus)));
     connect(gitLogProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(logOutput(int, QProcess::ExitStatus)));
 }
@@ -23,6 +25,7 @@ GitCommand::~GitCommand()
     delete defaultArgs;
     delete gitRunProcess;
     delete gitStatusProcess;
+    delete gitSetAuthorProcess;
     delete gitLSIgnoredProcess;
     delete gitAddProcess;
     delete gitLogProcess;
@@ -74,6 +77,32 @@ void GitCommand::lsIgnoredOutput(int exitCode, QProcess::ExitStatus exitStatus)
 
     QStringList fileList = resultString.split('\n',QString::SkipEmptyParts);
     emit lsIgnored(fileList);
+}
+void GitCommand::setAuthor()
+{
+    author();
+}
+void GitCommand::author()
+{
+    QSettings settings;
+    QString proc = settings.value("gitPath").toString();
+    //QString proc = "C:\\Program Files (x86)\\Mysysgit\\cmd\\git.cmd";
+    QStringList args = *defaultArgs;
+
+    QString author = settings.value("authorName").toString(); //doesn't seem to work with Mike
+    //QString author = "Mika";
+
+    args << "config" << "user.name" << author;
+    //args << "--git-dir" << repo + "/.git" << "--work-tree" << repo << "config" << "user.name" << author;
+
+    gitSetAuthorProcess->start(proc, args);
+
+}
+void GitCommand::authorOutput(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    //QByteArray result = gitSetAuthorProcess->readAll();
+    //QString resultString=result;
+
 }
 void GitCommand::log()
 {
